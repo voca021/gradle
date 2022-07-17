@@ -40,3 +40,8 @@ application {
     // Define the main class for the application.
     mainClass.set("gradle_source.AppKt")
 }
+jar {
+    manifest {
+       attributes 'Main-Class': 'com.vladafratric.vladafratric.java'
+    }
+}
