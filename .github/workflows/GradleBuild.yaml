@@ -13,3 +13,10 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Run build with Gradle Wrapper
       run: ./gradlew build
+    - name: Build and push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v4
+      with:
+        image: vladafratric/gradle
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }} 
+        password: ${{ secrets.DOCKER_PASSWORD }}   
