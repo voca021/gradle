@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="gradle_source.AppTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-07-20T11:46:31" hostname="vfratric-iten" time="0.031">
+  <properties/>
+  <testcase name="appHasAGreeting" classname="gradle_source.AppTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
