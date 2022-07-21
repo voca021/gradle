@@ -26,30 +26,30 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
 # Deploy to GCR
-   build-push-gcr:
-    - name: Build Docker image and Push to GCP
-      env:
-        IMAGE_NAME: app-image
-        PROJECT_ID: github-cloudrun
-      steps: google-github-actions/setup-gcloud@master
-      with:
-        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }} 
-        project_id: ${{ env.PROJECT_ID }}
-        export_default_credentials: true
+  build-push-gcr:
+   - name: Build Docker image and Push to GCP
+     env:
+       IMAGE_NAME: app-image
+       PROJECT_ID: github-cloudrun
+     steps: google-github-actions/setup-gcloud@master
+     with:
+       service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }} 
+       project_id: ${{ env.PROJECT_ID }}
+       export_default_credentials: true
 
-    - name: Build Docker Image
-      run: docker build-t $IMAGE_NAME:latest .
+   - name: Build Docker Image
+     run: docker build-t $IMAGE_NAME:latest .
 
-    - name: Configure Docker Client
-      run: |-
-        gcloud auth configure-docker --quiet
+   - name: Configure Docker Client
+     run: |-
+       gcloud auth configure-docker --quiet
 
-    - name: Push Docker Image to Container Registry (GCR)
-      env:
-        GIT_TAG: v0.1.0
-      run: |-
-        docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-        docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
-        docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-        docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+   - name: Push Docker Image to Container Registry (GCR)
+     env:
+       GIT_TAG: v0.1.0
+     run: |-
+       docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+       docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
+       docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+       docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG
   
