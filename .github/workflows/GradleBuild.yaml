@@ -27,6 +27,7 @@ jobs:
 
 # Deploy to GCR
   build-push-gcr:
+   runs-on: ubuntu-latest
    steps:
    - name: Build Docker image and Push to GCP
      env:
