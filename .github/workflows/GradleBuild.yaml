@@ -33,7 +33,7 @@ jobs:
      env:
        IMAGE_NAME: app-image
        PROJECT_ID: github-cloudrun
-     uses: google-github-actions/setup-gcloud@master
+     uses: google-github-actions/setup-gcloud@main
      with:
        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }} 
        project_id: ${{ env.PROJECT_ID }}
