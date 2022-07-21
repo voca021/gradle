@@ -49,12 +49,12 @@ jobs:
 
    - name: Configure Docker Client
      run: gcloud auth configure-docker --quiet
-    
+
    - name: Push Docker Image to Container Registry (GCR)
      env:
        GIT_TAG2: v0.1.0
      run: |-
-       docker tag $IMAGE_NAME:$GIT_TAG1 gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
+       docker tag $IMAGE_NAME:$GIT_TAG1 gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
  #      docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
  #      docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
        docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
