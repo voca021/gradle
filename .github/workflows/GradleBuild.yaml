@@ -26,37 +26,37 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
 # Deploy to GCR
-  build-push-gcr:
-   runs-on: ubuntu-latest
-   steps:
-   - name: Checkout project sources
-     uses: actions/checkout@v2
-   - name: Build Docker image and Push to GCP
-     env:
-       IMAGE_NAME: app-image
-       PROJECT_ID: github-cloudrun
-     uses: google-github-actions/setup-gcloud@main
-     with:
-       service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }} 
-       project_id: ${{ env.PROJECT_ID }}
-       export_default_credentials: true
+ # build-push-gcr:
+ # runs-on: ubuntu-latest
+ #  steps:
+ #  - name: Checkout project sources
+ #    uses: actions/checkout@v2
+    - name: Build Docker image and Push to GCP
+      env:
+        IMAGE_NAME: app-image
+        PROJECT_ID: github-cloudrun
+      uses: google-github-actions/setup-gcloud@main
+      with:
+        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }} 
+        project_id: ${{ env.PROJECT_ID }}
+        export_default_credentials: true
 
-   - name: Build Docker Image
-     env:
-       IMAGE_NAME: app-image
-       GIT_TAG1: v1.0
-     run: docker build -t $IMAGE_NAME:latest . 
+    - name: Build Docker Image
+      env:
+        IMAGE_NAME: app-image
+        GIT_TAG1: v1.0
+      run: docker build -t $IMAGE_NAME:$GIT_TAG1 . 
 
-   - name: Configure Docker Client
-     run: |- 
-       gcloud auth configure-docker --quiet
+    - name: Configure Docker Client
+      run: |- 
+        gcloud auth configure-docker --quiet
 
-   - name: Push Docker Image to GCR
-     env:
-       GIT_TAG2: v0.1.0
-     run: |-
-       docker tag $IMAGE_NAME:$GIT_TAG1 gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
+    - name: Push Docker Image to GCR
+      env:
+        GIT_TAG2: v0.1.0
+      run: |-
+        docker tag $IMAGE_NAME:$GIT_TAG1 gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
  #      docker tag $IMAGE_NAME:latest gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
  #      docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:latest
-       docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
+        docker push gcr.io/$PROJECT_ID/$IMAGE_NAME:$GIT_TAG2
   
